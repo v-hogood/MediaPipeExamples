@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationId>com.google.mediapipe.examples.TextClassifier</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MediaPipeTasksText" Version="0.10.10" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.10.0.3" />
+  </ItemGroup>
+  <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/bert_classifier/float32/1/bert_classifier.tflite" DestinationFolder="Assets" DestinationFileName="mobilebert.tflite" />
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/average_word_classifier/float32/1/average_word_classifier.tflite" DestinationFolder="Assets" DestinationFileName="wordvec.tflite" />
+  </Target>
+</Project>
