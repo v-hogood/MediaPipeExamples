@@ -9,38 +9,37 @@ classification models include Word Vector and MobileBERT.
 These instructions walk you through building and running the demo on an Android
 device.
 
-The model files are downloaded via Gradle scripts when you build and run the
-app. You don't need to do any steps to download TFLite models into the project
+The model files are downloaded by the project when you build and run the app.
+You don't need to do any steps to download TFLite models into the project
 explicitly.
 
 ![Text Classification Demo](textclassification.gif?raw=true "Text Classification Demo")
 
-## Build the demo using Android Studio
+## Build the demo using Visual Studio
 
 ### Prerequisites
 
-* The **[Android Studio](https://developer.android.com/studio/index.html)** IDE.
-  This sample has been tested on Android Studio Chipmunk.
+* The **[Visual Studio](https://visualstudio.microsoft.com/vs/mac/)** IDE.
+  This sample has been tested on Visual Studio 2022 for Mac.
 
-* A physical or emulated Android device with a minimum OS version of SDK 21
-  (Android 5.0) with developer mode enabled. The process of enabling
-  developer mode may vary by device.
+* A physical Android device with a minimum OS version of SDK 24 (Android 7.0 -
+  Nougat) with developer mode enabled. The process of enabling developer mode
+  may vary by device. You may also use and Android emulator.
 
 ### Building
 
-* Open Android Studio. From the Welcome screen, select Open an existing
-    Android Studio project.
+* Open Visual Studio. From the Welcome screen, select Open a local
+  Visual Studio project, solution, or file.
 
 * From the Open File or Project window that appears, navigate to and select
-    the mediapipe/examples/text_classification/android directory.
-    Click OK.
+  the MediaPipeExamples/MediaPipeExamples.sln Android solution. Click Open.
 
-* If it asks you to do a Gradle Sync, click OK.
+* Select the TextClassification project.
 
-* With your Android device connected developer mode
-    enabled, click on the green Run arrow in Android Studio.
+* With your Android device connected to your computer and developer mode
+  enabled, click on the black Run arrow in Visual Studio.
 
 ### Models used
 
-Downloading, extraction, and placing the models into the assets folder is
-managed automatically by the download_model.gradle file.
+Downloading, extraction, and placing the models into the *Assets* folder is
+managed automatically by the **TextClassification.csproj** file.
