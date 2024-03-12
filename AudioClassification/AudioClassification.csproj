@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationId>com.google.mediapipe.examples.AudioClassifier</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MediaPipeTasksAudio" Version="0.10.10" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.7.7.1" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.7.7.1" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.10.0.3" />
+  </ItemGroup>
+  <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite" DestinationFolder="Assets" />
+  </Target>
+</Project>
