@@ -11,7 +11,7 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksText" Version="0.10.10" />
+    <PackageReference Include="MediaPipeTasksText.Android" Version="0.10.11" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.10.0.3" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
