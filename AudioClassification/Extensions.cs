@@ -8,7 +8,7 @@ using Uri = Android.Net.Uri;
 
 namespace AudioClassification;
 
-public static class Extentions
+public static class Extensions
 {
     public static AudioData CreateAudioData(this Uri uri, Context context)
     {

@@ -14,7 +14,7 @@
     ~ limitations under the License.
 -->
 <resources>
-    <string name="app_name">Audio Classifier</string>
+    <string name="app_name">MP Audio Classifier</string>
     <string name="menu_recorder">Recorder</string>
     <string name="menu_library">Library</string>
 

@@ -125,7 +125,7 @@ public class AudioClassifierHelper : Object,
         // For example, YAMNET expects 0.975 second length recordings.
         // This needs to be in milliseconds to avoid the required Long value dropping decimals.
         var lengthInMilliSeconds =
-            ((float)RequireInputBufferSize / SamplingRateInHz) * 1000;
+            ((float)RequiredInputBufferSize / SamplingRateInHz) * 1000;
 
         var interval = (long) (lengthInMilliSeconds * (1 - Overlap * 0.25F));
 
@@ -208,14 +208,14 @@ public class AudioClassifierHelper : Object,
     private const int SamplingRateInHz = 16000;
     private const int BufferSizeFactor = 2;
     public const float ExpectedInputLength = 0.975F;
-    private const int RequireInputBufferSize = (int)
+    private const int RequiredInputBufferSize = (int)
         (SamplingRateInHz * ExpectedInputLength);
 
     //
     // Size of the buffer where the audio data is stored by Android
     //
     private const int BufferSizeInBytes =
-        RequireInputBufferSize * sizeof(float) * BufferSizeFactor;
+        RequiredInputBufferSize * sizeof(float) * BufferSizeFactor;
 
     public interface IClassifierListener
     {
