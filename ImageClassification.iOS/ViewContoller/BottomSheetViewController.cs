@@ -25,7 +25,7 @@ public partial class BottomSheetViewController : UIViewController
     private static MPPImageClassifierResult imageClassifierResult;
 
     public float CollapsedHeight =>
-        normalCellHeight * (float)InferenceConfigManager.SharedInstance.MaxResults;
+        normalCellHeight * (float)InferenceConfigurationManager.SharedInstance.MaxResults;
     bool uiEnabled = false;
     public bool UIEnabled
     {
@@ -56,28 +56,46 @@ public partial class BottomSheetViewController : UIViewController
 
     private void SetupUI()
     {
-        maxResultStepper.Value = (double)(InferenceConfigManager.SharedInstance.MaxResults);
-        maxResultLabel.Text = "" + InferenceConfigManager.SharedInstance.MaxResults;
+        maxResultStepper.Value = (double)(InferenceConfigurationManager.SharedInstance.MaxResults);
+        maxResultLabel.Text = "" + InferenceConfigurationManager.SharedInstance.MaxResults;
 
-        thresholdStepper.Value = (double)InferenceConfigManager.SharedInstance.ScoreThreshold;
-        thresholdValueLabel.Text = "" + InferenceConfigManager.SharedInstance.ScoreThreshold;
+        thresholdStepper.Value = (double)InferenceConfigurationManager.SharedInstance.ScoreThreshold;
+        thresholdValueLabel.Text = "" + InferenceConfigurationManager.SharedInstance.ScoreThreshold;
 
         // Chose model option
         UIActionHandler choseModel = (UIAction action) =>
             this.UpdateModel(modelTitle: action.Title);
-        var actions = Enum.GetValues<Model>().Select((model, _) =>
+        var modelActions = Enum.GetValues<Model>().Select((model, _) =>
         {
-            var action = UIAction.Create(title: model.ToText(),
+            var action = UIAction.Create(title: model.ToString(),
                 image: null, identifier: null, choseModel);
-            if (model == InferenceConfigManager.SharedInstance.Model)
+            if (model == InferenceConfigurationManager.SharedInstance.Model)
             {
                 action.State = UIMenuElementState.On;
             }
             return action;
         }).ToArray();
-        choseModelButton.Menu = UIMenu.Create(children: actions);
-        choseModelButton.ShowsMenuAsPrimaryAction = true;
-        choseModelButton.ChangesSelectionAsPrimaryAction = true;
+        chooseModelButton.Menu = UIMenu.Create(children: modelActions);
+        chooseModelButton.ShowsMenuAsPrimaryAction = true;
+        chooseModelButton.ChangesSelectionAsPrimaryAction = true;
+
+        // Chose delegate option
+        UIActionHandler choseDelegate = (UIAction action) =>
+            this.UpdateDelegate(delegateTitle: action.Title);
+        var delegateActions = Enum.GetValues<ImageClassifierDelegate>().Select((_delegate, _) =>
+        {
+            var action = UIAction.Create(title: _delegate.ToString(),
+                image: null, identifier: null, choseDelegate);
+            if (_delegate == InferenceConfigurationManager.SharedInstance.Delegate)
+            {
+                action.State = UIMenuElementState.On;
+            }
+            return action;
+        }).ToArray();
+
+        chooseDelegateButton.Menu = UIMenu.Create(children: delegateActions);
+        chooseDelegateButton.ShowsMenuAsPrimaryAction = true;
+        chooseDelegateButton.ChangesSelectionAsPrimaryAction = true;
 
         // Setup table view cell height
         tableView.RowHeight = normalCellHeight;
@@ -85,10 +103,16 @@ public partial class BottomSheetViewController : UIViewController
 
     private void UpdateModel(string modelTitle)
     {
-        Model model = modelTitle.ToModel();
-        InferenceConfigManager.SharedInstance.Model = model;
+        var model = modelTitle.ToModel();
+        InferenceConfigurationManager.SharedInstance.Model = model;
     }
-  
+
+    private void UpdateDelegate(string delegateTitle)
+    {
+        var Delegate = delegateTitle.ToDelegate();
+        InferenceConfigurationManager.SharedInstance.Delegate = Delegate;
+    }
+
     private void EnableOrDisableClicks()
     {
         thresholdStepper.Enabled = UIEnabled;
@@ -107,7 +131,7 @@ public partial class BottomSheetViewController : UIViewController
     void ThresholdStepperValueChanged(UIStepper sender)
     {
         var scoreThreshold = (float)sender.Value;
-        InferenceConfigManager.SharedInstance.ScoreThreshold = scoreThreshold;
+        InferenceConfigurationManager.SharedInstance.ScoreThreshold = scoreThreshold;
         thresholdValueLabel.Text = "" + scoreThreshold;
     }
 
@@ -115,7 +139,7 @@ public partial class BottomSheetViewController : UIViewController
     void MaxResultStepperValueChanged(UIStepper sender)
     {
         var maxResults = (int)sender.Value;
-        InferenceConfigManager.SharedInstance.MaxResults = maxResults;
+        InferenceConfigurationManager.SharedInstance.MaxResults = maxResults;
         maxResultLabel.Text = "" + maxResults;
     }
 }
@@ -123,7 +147,7 @@ public partial class BottomSheetViewController : UIViewController
 partial class BottomSheetViewController : IUITableViewDataSource
 {
     public nint RowsInSection(UITableView tableView, nint section) =>
-        InferenceConfigManager.SharedInstance.MaxResults;
+        InferenceConfigurationManager.SharedInstance.MaxResults;
 
     public UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
     {

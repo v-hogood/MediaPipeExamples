@@ -136,10 +136,11 @@ public partial class CameraViewController : UIViewController
         imageClassifierService = null;
         imageClassifierService = ImageClassification.ImageClassifierService
             .LiveStreamClassifierService(
-                model: InferenceConfigManager.SharedInstance.Model,
-                scoreThreshold: InferenceConfigManager.SharedInstance.ScoreThreshold,
-                maxResult: InferenceConfigManager.SharedInstance.MaxResults,
-                liveStreamDelegate: this);
+                model: InferenceConfigurationManager.SharedInstance.Model,
+                scoreThreshold: InferenceConfigurationManager.SharedInstance.ScoreThreshold,
+                maxResult: InferenceConfigurationManager.SharedInstance.MaxResults,
+                liveStreamDelegate: this,
+                imageClassifierDelegate: InferenceConfigurationManager.SharedInstance.Delegate);
     }
   
     private void ClearImageClassifierServiceOnSessionInterruption()
@@ -153,7 +154,7 @@ public partial class CameraViewController : UIViewController
         NSNotificationCenter.DefaultCenter
             .AddObserver(this,
                 aSelector: new ObjCRuntime.Selector("clearAndInitializeImageClassifierService"),
-                aName: (NSString)InferenceConfigManager.NotificationName,
+                aName: (NSString)InferenceConfigurationManager.NotificationName,
                 anObject: null);
         isObserving = true;
     }
@@ -164,7 +165,7 @@ public partial class CameraViewController : UIViewController
         {
             NSNotificationCenter.DefaultCenter
                 .RemoveObserver(this,
-                    aName: InferenceConfigManager.NotificationName,
+                    aName: InferenceConfigurationManager.NotificationName,
                     anObject: null);
         }
         isObserving = false;

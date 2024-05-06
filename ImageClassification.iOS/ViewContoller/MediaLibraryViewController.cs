@@ -291,18 +291,20 @@ partial class MediaLibraryViewController : IUIImagePickerControllerDelegate, IUI
             case MPPRunningMode.Image:
                 imageClassifierService = ImageClassification.ImageClassifierService
                     .StillImageClassifierService(
-                        model: InferenceConfigManager.SharedInstance.Model,
-                        scoreThreshold: InferenceConfigManager.SharedInstance.ScoreThreshold,
-                        maxResult: InferenceConfigManager.SharedInstance.MaxResults
+                        model: InferenceConfigurationManager.SharedInstance.Model,
+                        scoreThreshold: InferenceConfigurationManager.SharedInstance.ScoreThreshold,
+                        maxResult: InferenceConfigurationManager.SharedInstance.MaxResults,
+                        imageClassifierDelegate: InferenceConfigurationManager.SharedInstance.Delegate
                 );
                 break;
             case MPPRunningMode.Video:
                 imageClassifierService = ImageClassification.ImageClassifierService
                     .VideoClassifierService(
-                        model: InferenceConfigManager.SharedInstance.Model,
-                        scoreThreshold: InferenceConfigManager.SharedInstance.ScoreThreshold,
-                        maxResult: InferenceConfigManager.SharedInstance.MaxResults,
-                        videoDelegate: this);
+                        model: InferenceConfigurationManager.SharedInstance.Model,
+                        scoreThreshold: InferenceConfigurationManager.SharedInstance.ScoreThreshold,
+                        maxResult: InferenceConfigurationManager.SharedInstance.MaxResults,
+                        videoDelegate: this,
+                        imageClassifierDelegate: InferenceConfigurationManager.SharedInstance.Delegate);
                 break;
             default:
                 break;

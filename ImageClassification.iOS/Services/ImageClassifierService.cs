@@ -38,14 +38,21 @@ public class ImageClassifierService : MPPImageClassifierLiveStreamDelegate
     private float scoreThreshold;
     private int maxResult;
     private string modelPath;
+    private ImageClassifierDelegate imageClassifierDelegate;
 
-    public ImageClassifierService(Model model, float scoreThreshold, int maxResult, MPPRunningMode runningMode)
+    public ImageClassifierService(
+        Model model,
+        float scoreThreshold,
+        int maxResult,
+        MPPRunningMode runningMode,
+        ImageClassifierDelegate imageClassifierDelegate)
     {
         modelPath = model.ModelPath();
         if (modelPath == null) return;
         this.scoreThreshold = scoreThreshold;
         this.runningMode = runningMode;
         this.maxResult = maxResult;
+        this.imageClassifierDelegate = imageClassifierDelegate;
 
         CreateImageClassifier();
     }
@@ -57,6 +64,7 @@ public class ImageClassifierService : MPPImageClassifierLiveStreamDelegate
         imageClassifierOptions.ScoreThreshold = scoreThreshold;
         imageClassifierOptions.MaxResults = maxResult;
         imageClassifierOptions.BaseOptions.ModelAssetPath = modelPath;
+        imageClassifierOptions.BaseOptions.Delegate = imageClassifierDelegate.Delegate();
         if (runningMode == MPPRunningMode.LiveStream)
         {
             imageClassifierOptions.ImageClassifierLiveStreamDelegate = this;
@@ -73,13 +81,15 @@ public class ImageClassifierService : MPPImageClassifierLiveStreamDelegate
         Model model,
         float scoreThreshold,
         int maxResult,
-        ImageClassifierServiceVideoDelegate videoDelegate)
+        ImageClassifierServiceVideoDelegate videoDelegate,
+        ImageClassifierDelegate imageClassifierDelegate)
     {
         var imageClassifierService = new ImageClassifierService(
             model: model,
             scoreThreshold: scoreThreshold,
             maxResult: maxResult,
-            runningMode: MPPRunningMode.Video);
+            runningMode: MPPRunningMode.Video,
+            imageClassifierDelegate: imageClassifierDelegate);
         imageClassifierService.videoDelegate = videoDelegate;
 
         return imageClassifierService;
@@ -89,13 +99,15 @@ public class ImageClassifierService : MPPImageClassifierLiveStreamDelegate
         Model model,
         float scoreThreshold,
         int maxResult,
-        ImageClassifierServiceLiveStreamDelegate liveStreamDelegate)
+        ImageClassifierServiceLiveStreamDelegate liveStreamDelegate,
+        ImageClassifierDelegate imageClassifierDelegate)
     {
         var imageClassifierService = new ImageClassifierService(
             model: model,
             scoreThreshold: scoreThreshold,
             maxResult: maxResult,
-            runningMode: MPPRunningMode.LiveStream);
+            runningMode: MPPRunningMode.LiveStream,
+            imageClassifierDelegate: imageClassifierDelegate);
         imageClassifierService.liveStreamDelegate = liveStreamDelegate;
 
         return imageClassifierService;
@@ -104,13 +116,15 @@ public class ImageClassifierService : MPPImageClassifierLiveStreamDelegate
     public static ImageClassifierService StillImageClassifierService(
         Model model,
         float scoreThreshold,
-        int maxResult)
+        int maxResult,
+        ImageClassifierDelegate imageClassifierDelegate)
     {
         var imageClassifierService = new ImageClassifierService(
             model: model,
             scoreThreshold: scoreThreshold,
             maxResult: maxResult,
-            runningMode: MPPRunningMode.Image);
+            runningMode: MPPRunningMode.Image,
+            imageClassifierDelegate: imageClassifierDelegate);
 
         return imageClassifierService;
     }
@@ -206,7 +220,9 @@ public class ImageClassifierService : MPPImageClassifierLiveStreamDelegate
             var time = new CMTime(value: timestampMs, timescale: 1000);
             CMTime actualTime;
             NSError error;
+#pragma warning disable CA1422
             image = assetGenerator.CopyCGImageAtTime(requestedTime: time, actualTime: out actualTime, outError: out error);
+#pragma warning restore CA1422
             if (error != null)
             {
                 Console.WriteLine(error);

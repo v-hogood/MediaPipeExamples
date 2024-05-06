@@ -23,9 +23,9 @@ public partial class RootViewController : UIViewController
 
     public struct Constants
     {
-        public const float InferenceBottomHeight = 240.0f;
+        public const float InferenceBottomHeight = 284.0f;
         public const float ExpandButtonHeight = 41.0f;
-        public const float ExpandButtonTopSpace = 10.0f;
+        public const float ExpandButtonTopSpace = 20.0f;
         public const string MediaLibraryViewControllerStoryBoardId = "MEDIA_LIBRARY_VIEW_CONTROLLER";
         public const string CameraViewControllerStoryBoardId = "CAMERA_VIEW_CONTROLLER";
         public const string StoryBoardName = "Main";
@@ -60,6 +60,7 @@ public partial class RootViewController : UIViewController
         runningModeTabbar.Delegate = this;
         InstantiateCameraViewController();
         SwitchTo(childViewController: cameraViewController, fromViewController: null);
+        StartObserveMaxResultsChanges();
     }
 
     override public void ViewWillLayoutSubviews()
@@ -98,6 +99,11 @@ public partial class RootViewController : UIViewController
         }
     }
 
+    ~RootViewController()
+    {
+        StopObserveMaxResultsChanges();
+    }
+
     private void InstantiateCameraViewController()
     {
         if (cameraViewController != null)
@@ -121,7 +127,7 @@ public partial class RootViewController : UIViewController
         NSNotificationCenter.DefaultCenter
           .AddObserver(this,
                        aSelector: new ObjCRuntime.Selector("changebottomViewHeightConstraint"),
-                       aName: (NSString)InferenceConfigManager.MaxResultChangeNotificationName,
+                       aName: (NSString)InferenceConfigurationManager.MaxResultChangeNotificationName,
                        anObject: null);
         isObserving = true;
     }
@@ -132,7 +138,7 @@ public partial class RootViewController : UIViewController
         {
             NSNotificationCenter.DefaultCenter
               .RemoveObserver(this,
-                              aName: InferenceConfigManager.MaxResultChangeNotificationName,
+                              aName: InferenceConfigurationManager.MaxResultChangeNotificationName,
                               anObject: null);
         }
         isObserving = false;

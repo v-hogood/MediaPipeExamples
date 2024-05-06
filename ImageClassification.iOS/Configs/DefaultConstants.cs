@@ -1,3 +1,5 @@
+using MediaPipeTasksVision;
+
 namespace ImageClassification;
 
 public struct DefaultConstants
@@ -20,6 +22,7 @@ public struct DefaultConstants
     static UIColor OverlayColor = new(red: 0, green: 127 / 255.0f, blue: 139 / 255.0f, alpha: 1);
     static UIFont DisplayFont = UIFont.SystemFontOfSize(size: 14.0f, weight: UIFontWeight.Medium);
     public const Model model = Model.EfficientnetLite0;
+    public const ImageClassifierDelegate Delegate = ImageClassifierDelegate.CPU;
 }
 
 public enum Model
@@ -28,21 +31,19 @@ public enum Model
     EfficientnetLite2
 }
 
+public enum ImageClassifierDelegate
+{
+    CPU,
+    GPU
+}
+
 public static class Extensions
 {
-    public static string ToText(this Model model) =>
-        model switch
-        {
-            Model.EfficientnetLite0 => "EfficientNet-Lite0",
-            Model.EfficientnetLite2 => "EfficientNet-Lite2",
-            _ => ""
-        };
-
     public static Model ToModel(this string text) =>
        text switch
        {
-           "EfficientNet-Lite0" => Model.EfficientnetLite0,
-           "EfficientNet-Lite2" => Model.EfficientnetLite2,
+           "EfficientNetLite0" => Model.EfficientnetLite0,
+           "EfficientNetLite2" => Model.EfficientnetLite2,
            _ => Model.EfficientnetLite0
        };
 
@@ -54,5 +55,21 @@ public static class Extensions
             Model.EfficientnetLite2 => NSBundle.MainBundle.PathForResource(
                 "efficientnet_lite2", ofType: "tflite"),
             _ => ""
+        };
+
+    public static ImageClassifierDelegate ToDelegate(this string text) =>
+       text switch
+       {
+           "CPU" => ImageClassifierDelegate.CPU,
+           "GPU" => ImageClassifierDelegate.GPU,
+           _ => ImageClassifierDelegate.CPU
+       };
+
+    public static MPPDelegate Delegate(this ImageClassifierDelegate imageClassifierDelegate) =>
+        imageClassifierDelegate switch
+        {
+            ImageClassifierDelegate.CPU => MPPDelegate.Cpu,
+            ImageClassifierDelegate.GPU => MPPDelegate.Gpu,
+            _ => MPPDelegate.Cpu
         };
 }

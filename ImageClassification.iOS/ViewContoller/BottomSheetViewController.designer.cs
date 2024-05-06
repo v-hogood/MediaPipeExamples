@@ -44,7 +44,11 @@ namespace ImageClassification
 
         [Outlet]
         [GeneratedCode("iOS Designer", "1.0")]
-        UIButton choseModelButton { get; set; }
+        UIButton chooseModelButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode("iOS Designer", "1.0")]
+        UIButton chooseDelegateButton { get; set; }
 
         [Outlet]
         [GeneratedCode("iOS Designer", "1.0")]
@@ -73,8 +77,11 @@ namespace ImageClassification
             toggleBottomSheetButton?.Dispose();
             toggleBottomSheetButton = null;
 
-            choseModelButton?.Dispose();
-            choseModelButton = null;
+            chooseModelButton?.Dispose();
+            chooseModelButton = null;
+
+            chooseDelegateButton?.Dispose();
+            chooseDelegateButton = null;
 
             tableView?.Dispose();
             tableView = null;
