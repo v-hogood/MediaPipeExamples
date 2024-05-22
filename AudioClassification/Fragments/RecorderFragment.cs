@@ -136,11 +136,8 @@ public class RecorderFragment : Fragment,
 
     public void OnItemSelected(AdapterView parent, View view, int position, long id)
     {
-        if (view.Id == Resource.Id.spinner_overlap)
-        {
-            audioClassifierHelper.Overlap = position;
-            UpdateControlsUI();
-        }
+        audioClassifierHelper.Overlap = position;
+        UpdateControlsUI();
     }
 
     public void OnNothingSelected(AdapterView parent)
