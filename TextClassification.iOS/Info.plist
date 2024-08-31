@@ -5,7 +5,7 @@
     <key>CFBundleDisplayName</key>
     <string>TextClassifier</string>
     <key>CFBundleIdentifier</key>
-    <string>com.google.mediapipe.examples.textclassifier</string>
+    <string>com.google.mediapipe.examples.TextClassifier</string>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
