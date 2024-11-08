@@ -13,7 +13,7 @@
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksText.iOS" Version="0.10.15" />
+    <PackageReference Include="MediaPipeTasksText.iOS" Version="0.10.18" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="PrepareForBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/bert_classifier/float32/1/bert_classifier.tflite" DestinationFolder="Resources" DestinationFileName="bert_classifier.tflite" />
