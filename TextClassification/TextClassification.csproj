@@ -11,8 +11,8 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksText.Android" Version="0.10.15" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.11.0.2" />
+    <PackageReference Include="MediaPipeTasksText.Android" Version="0.10.18" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.12.0.1" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/bert_classifier/float32/1/bert_classifier.tflite" DestinationFolder="Assets" DestinationFileName="mobilebert.tflite" />

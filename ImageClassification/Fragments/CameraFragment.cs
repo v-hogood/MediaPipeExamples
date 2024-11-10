@@ -304,7 +304,7 @@ public class CameraFragment : Fragment,
             );
 
             // Attach the viewfinder's surface provider to preview use case
-            preview?.SetSurfaceProvider(viewFinder.SurfaceProvider);
+            preview.SurfaceProvider = viewFinder.SurfaceProvider;
         }
         catch (Exception exc)
         {

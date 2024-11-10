@@ -11,12 +11,12 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksVision.Android" Version="0.10.15" />
-    <PackageReference Include="Xamarin.AndroidX.Camera.Camera2" Version="1.3.4.2" />
-    <PackageReference Include="Xamarin.AndroidX.Camera.View" Version="1.3.4.2" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.7.7.6" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.7.7.6" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.11.0.2" />
+    <PackageReference Include="MediaPipeTasksVision.Android" Version="0.10.18" />
+    <PackageReference Include="Xamarin.AndroidX.Camera.Camera2" Version="1.4.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Camera.View" Version="1.4.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.8.3.1" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.8.3.1" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.12.0.1" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/image_classifier/efficientnet_lite0/float32/1/efficientnet_lite0.tflite" DestinationFolder="Assets" DestinationFileName="efficientnet-lite0.tflite" />
