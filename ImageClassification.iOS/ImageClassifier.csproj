@@ -13,7 +13,7 @@
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksVision.iOS" Version="0.10.18" />
+    <PackageReference Include="MediaPipeTasksVision.iOS" Version="0.10.20" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="PrepareForBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/image_classifier/efficientnet_lite0/float32/1/efficientnet_lite0.tflite" DestinationFolder="Resources" DestinationFileName="efficientnet_lite0.tflite" />
