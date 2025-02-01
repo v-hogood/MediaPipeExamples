@@ -12,9 +12,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediaPipeTasksAudio.Android" Version="0.10.20" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.8.5" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.8.5" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.12.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.8.5.1" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.8.5.1" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.12.0.2" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite" DestinationFolder="Assets" />
