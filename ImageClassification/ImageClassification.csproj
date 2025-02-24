@@ -11,7 +11,7 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksVision.Android" Version="0.10.20" />
+    <PackageReference Include="MediaPipeTasksVision.Android" Version="0.10.21" />
     <PackageReference Include="Xamarin.AndroidX.Camera.Camera2" Version="1.4.1.1" />
     <PackageReference Include="Xamarin.AndroidX.Camera.View" Version="1.4.1.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.8.5.1" />
