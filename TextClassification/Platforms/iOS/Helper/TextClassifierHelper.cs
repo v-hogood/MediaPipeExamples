@@ -1,4 +1,5 @@
-﻿using MediaPipeTasksText;
+﻿using Foundation;
+using MediaPipeTasksText;
 using static TextClassification.TextClassifierHelper;
 
 namespace TextClassification;
@@ -63,9 +64,9 @@ public static class Extensions
         model switch
         {
             Model.MobileBert => NSBundle.MainBundle.PathForResource(
-                "bert_classifier", ofType: "tflite"),
+                "mobilebert", ofType: "tflite"),
             Model.AvgWordClassifier => NSBundle.MainBundle.PathForResource(
-                "average_word_classifier", ofType: "tflite"),
+                "wordvec", ofType: "tflite"),
             _ => ""
         };
 }

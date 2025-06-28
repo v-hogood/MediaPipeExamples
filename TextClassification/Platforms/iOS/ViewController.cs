@@ -1,6 +1,8 @@
 ﻿using CoreFoundation;
+using Foundation;
 using MediaPipeTasksText;
 using ObjCRuntime;
+using UIKit;
 using static TextClassification.TextClassifierHelper;
 
 namespace TextClassification;

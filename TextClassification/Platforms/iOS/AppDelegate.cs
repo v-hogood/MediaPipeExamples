@@ -1,4 +1,7 @@
-﻿namespace TextClassification;
+﻿using Foundation;
+using UIKit;
+
+namespace TextClassification;
 
 [Register ("AppDelegate")]
 public class AppDelegate : UIResponder, IUIApplicationDelegate

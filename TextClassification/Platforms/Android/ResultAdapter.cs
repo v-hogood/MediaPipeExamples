@@ -1,7 +1,9 @@
 using System.Globalization;
 using Android.Views;
+using Android.Widget;
 using AndroidX.RecyclerView.Widget;
 using MediaPipe.Tasks.Components.Containers;
+using View = Android.Views.View;
 
 namespace TextClassification
 {

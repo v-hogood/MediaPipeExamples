@@ -1,5 +1,7 @@
+using Android.App;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.Core.Widget;
 using AndroidX.RecyclerView.Widget;
@@ -7,6 +9,7 @@ using Google.Android.Material.BottomSheet;
 using Google.Android.Material.Button;
 using Google.Android.Material.TextField;
 using MediaPipe.Tasks.Text.TextClassifier;
+using View = Android.Views.View;
 
 namespace TextClassification
 {
