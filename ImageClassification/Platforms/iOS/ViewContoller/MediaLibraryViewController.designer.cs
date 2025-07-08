@@ -5,7 +5,9 @@
 // Manual changes to this file will not be maintained.
 //
 using System.CodeDom.Compiler;
+using Foundation;
 using ObjCRuntime;
+using UIKit;
 
 namespace ImageClassification
 {

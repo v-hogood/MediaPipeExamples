@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Provider;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 using AndroidX.Activity.Result;
 using AndroidX.Activity.Result.Contract;
 using AndroidX.AppCompat.Widget;
@@ -16,6 +17,7 @@ using MediaPipe.Tasks.Vision.Core;
 using Fragment = AndroidX.Fragment.App.Fragment;
 using Object = Java.Lang.Object;
 using Uri = Android.Net.Uri;
+using View = Android.Views.View;
 
 namespace ImageClassification;
 

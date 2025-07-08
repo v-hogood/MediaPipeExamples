@@ -1,4 +1,6 @@
-﻿using AndroidX.AppCompat.App;
+﻿using Android.App;
+using Android.OS;
+using AndroidX.AppCompat.App;
 using AndroidX.Navigation.Fragment;
 using AndroidX.Navigation.UI;
 using Google.Android.Material.BottomNavigation;

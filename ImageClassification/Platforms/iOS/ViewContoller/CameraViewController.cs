@@ -1,7 +1,9 @@
 using AVFoundation;
 using CoreFoundation;
 using CoreMedia;
+using Foundation;
 using ObjCRuntime;
+using UIKit;
 using static ImageClassification.CameraFeedService;
 
 namespace ImageClassification;

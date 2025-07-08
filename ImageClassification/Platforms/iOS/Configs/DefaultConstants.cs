@@ -1,4 +1,6 @@
+using Foundation;
 using MediaPipeTasksVision;
+using UIKit;
 
 namespace ImageClassification;
 

@@ -1,4 +1,7 @@
-﻿namespace ImageClassification;
+﻿using Foundation;
+using UIKit;
+
+namespace ImageClassification;
 
 [Register ("AppDelegate")]
 public class AppDelegate : UIResponder, IUIApplicationDelegate

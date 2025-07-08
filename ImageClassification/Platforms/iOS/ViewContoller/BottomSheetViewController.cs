@@ -1,5 +1,7 @@
+using Foundation;
 using MediaPipeTasksVision;
 using ObjCRuntime;
+using UIKit;
 
 namespace ImageClassification;
 

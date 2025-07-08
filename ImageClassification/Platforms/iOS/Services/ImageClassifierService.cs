@@ -1,7 +1,10 @@
 using AVFoundation;
 using CoreFoundation;
+using CoreGraphics;
 using CoreMedia;
+using Foundation;
 using MediaPipeTasksVision;
+using UIKit;
 
 namespace ImageClassification;
 

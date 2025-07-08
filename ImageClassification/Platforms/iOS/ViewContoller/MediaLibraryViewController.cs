@@ -2,9 +2,11 @@ using AVFoundation;
 using AVKit;
 using CoreFoundation;
 using CoreMedia;
+using Foundation;
 using MediaPipeTasksVision;
 using MobileCoreServices;
 using ObjCRuntime;
+using UIKit;
 
 namespace ImageClassification;
 

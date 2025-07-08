@@ -1,5 +1,7 @@
+using Android.OS;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Camera.Core;
 using AndroidX.Camera.Core.ResolutionSelector;
@@ -13,6 +15,7 @@ using Java.Util.Concurrent;
 using MediaPipe.Tasks.Vision.Core;
 using Exception = Java.Lang.Exception;
 using Fragment = AndroidX.Fragment.App.Fragment;
+using View = Android.Views.View;
 
 namespace ImageClassification;
 

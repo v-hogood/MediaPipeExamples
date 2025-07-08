@@ -1,8 +1,11 @@
 using System.Diagnostics;
 using AVFoundation;
 using CoreFoundation;
+using CoreGraphics;
 using CoreMedia;
 using CoreVideo;
+using Foundation;
+using UIKit;
 
 namespace ImageClassification;
 
