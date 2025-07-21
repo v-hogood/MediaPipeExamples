@@ -11,9 +11,9 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksVisionImageGenerator.Android" Version="0.10.21" />
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.2" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.12.0.2" />
+    <PackageReference Include="MediaPipeTasksVisionImageGenerator.Android" Version="0.10.26.1" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.4" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.12.0.4" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task" DestinationFolder="Assets" DestinationFileName="face_landmarker.task" />
