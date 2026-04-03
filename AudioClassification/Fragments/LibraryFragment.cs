@@ -87,9 +87,7 @@ public class LibraryFragment : Fragment,
 
     override public void OnDestroyView()
     {
-#pragma warning disable CA1422
         base.OnDestroyView();
-#pragma warning restore
         audioClassifierHelper?.StopAudioClassification();
     }
 

@@ -11,12 +11,12 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksAudio.Android" Version="0.10.32" />
-    <PackageReference Include="Xamarin.AndroidX.Compose.Runtime.Annotation" Version="1.10.3.1" />
-    <PackageReference Include="Xamarin.AndroidX.Compose.Runtime.Annotation.Jvm" Version="1.10.3" ExcludeAssets="all" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.9.7" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.9.7" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.13.0.1" />
+    <PackageReference Include="MediaPipeTasksAudio.Android" Version="0.10.33" />
+    <PackageReference Include="Xamarin.AndroidX.Compose.Runtime.Annotation" Version="1.10.4.1" />
+    <PackageReference Include="Xamarin.AndroidX.Compose.Runtime.Annotation.Jvm" Version="1.10.4.1" ExcludeAssets="all" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.9.7.1" />
+    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.9.7.1" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.13.0.2" />
   </ItemGroup>
   <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
     <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite" DestinationFolder="Assets" />

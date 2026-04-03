@@ -112,9 +112,7 @@ namespace TextClassification
             }
             else
             {
-#pragma warning disable CA1422
-                base.OnBackPressed();
-#pragma warning restore CA1422
+                OnBackPressedDispatcher.OnBackPressed();
             }
         }
     }
