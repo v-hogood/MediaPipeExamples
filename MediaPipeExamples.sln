@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioClassification", "Audi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGeneration", "ImageGeneration\ImageGeneration.csproj", "{C4466A37-9A80-4895-A60F-38E4FC09E99D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlmInference", "LlmInference\LlmInference.csproj", "{68965D26-72C1-40BA-A107-F71F63507D30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{C4466A37-9A80-4895-A60F-38E4FC09E99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4466A37-9A80-4895-A60F-38E4FC09E99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4466A37-9A80-4895-A60F-38E4FC09E99D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68965D26-72C1-40BA-A107-F71F63507D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68965D26-72C1-40BA-A107-F71F63507D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68965D26-72C1-40BA-A107-F71F63507D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68965D26-72C1-40BA-A107-F71F63507D30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
