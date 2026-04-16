@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlmAndroid", "LlmAndroid.csproj", "{35D34510-4AB7-3AC2-B6DE-271262D1BEE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35D34510-4AB7-3AC2-B6DE-271262D1BEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D34510-4AB7-3AC2-B6DE-271262D1BEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D34510-4AB7-3AC2-B6DE-271262D1BEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D34510-4AB7-3AC2-B6DE-271262D1BEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0C52C2F-211D-4058-A6A5-0C2493D09D7B}
+	EndGlobalSection
+EndGlobal
