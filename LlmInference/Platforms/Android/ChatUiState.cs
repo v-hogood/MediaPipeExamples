@@ -16,10 +16,9 @@ public class ChatUiState : Java.Lang.Object
 
     public Action OnMessagesChanged = null;
 
-    public ChatUiState(bool supportsThinking, List<ChatMessage> messages)
+    public ChatUiState(bool supportsThinking = false)
     {
         this.supportsThinking = supportsThinking;
-        this.messages = messages.AsEnumerable().Reverse().ToList();
     }
 
     // Creates a new loading message.
@@ -85,7 +84,7 @@ public class ChatUiState : Java.Lang.Object
 
     private int AppendToMessage(string id, string suffix)
     {
-        var index = messages.FindIndex(it => it.Id.Equals(currentMessageId));
+        var index = messages.FindIndex(it => it.Id.Equals(id));
         string newText = suffix.Replace(ThinkingMarkerEnd, "");
         messages[index] = messages[index] with
         {

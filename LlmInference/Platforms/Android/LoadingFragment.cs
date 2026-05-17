@@ -19,9 +19,6 @@ namespace LlmInference;
 public class LoadingFragment : Fragment,
     View.IOnClickListener
 {
-    public Action OnModelLoaded;
-    public Action OnGoBack;
-
     private class MissingAccessTokenException : Exception
     {
         public MissingAccessTokenException() :
@@ -42,11 +39,14 @@ public class LoadingFragment : Fragment,
 
     private const int UnauthorizedCode = 401;
 
+    public Action OnModelLoaded;
+    public Action OnGoBack;
+
     private TextView loadingStatus;
     private CircularProgressIndicator progressIndicator;
     private Button cancelButton;
     private Button backButton;
-    private IJob downloadJob;
+    private IJob job;
     private OkHttpClient client = new();
 
     override public View OnCreateView(
@@ -77,14 +77,11 @@ public class LoadingFragment : Fragment,
     {
         if (v == cancelButton)
         {
-            downloadJob?.Cancel(null);
+            job?.Cancel(null);
             GetLifecycleScope(this).Launch(Dispatchers.IO, () =>
             {
                 DeleteDownloadedFile(RequireContext());
-                WithContext(Dispatchers.Main, () =>
-                {
-                    ShowError("Download Cancelled");
-                });
+                ShowError("Download Cancelled");
             });
         }
         else if (v == backButton)
@@ -100,10 +97,9 @@ public class LoadingFragment : Fragment,
         cancelButton.Visibility = ViewStates.Gone;
         backButton.Visibility = ViewStates.Gone;
 
-        downloadJob = GetLifecycleScope(this).Launch(Dispatchers.IO, () =>
+        job = GetLifecycleScope(this).Launch(Dispatchers.IO, () =>
         {
             var context = RequireContext().ApplicationContext;
-            string errorMessage = "";
             try
             {
                 if (!InferenceModel.ModelExists(context))
@@ -113,13 +109,9 @@ public class LoadingFragment : Fragment,
                         throw new MissingUrlException("Please manually copy the model to " + InferenceModel.Model.Path);
                     }
                     
-                    WithContext(Dispatchers.Main, () =>
-                    {
-                        cancelButton.Visibility = ViewStates.Visible;
-                        progressIndicator.Indeterminate = false;
-                    });
+                    ShowDownloading();
 
-                    DownloadModel(context, InferenceModel.Model,
+                    DownloadModel(context, InferenceModel.Model, client,
                         (progress) =>
                     {
                         GetLifecycleScope(this).Launch(Dispatchers.Main, () =>
@@ -130,6 +122,9 @@ public class LoadingFragment : Fragment,
                     });
                 }
 
+                if (job.IsCancelled)
+                    return;
+
                 InferenceModel.ResetInstance(context);
                 // Notify the UI that the model has finished loading
                 WithContext(Dispatchers.Main, () =>
@@ -139,25 +134,25 @@ public class LoadingFragment : Fragment,
             }
             catch (MissingAccessTokenException e)
             {
-                errorMessage = e.LocalizedMessage ?? "Unknown Error";
+                ShowError(e.LocalizedMessage ?? "Unknown Error");
             }
             catch (MissingUrlException e)
             {
-                errorMessage = e.LocalizedMessage ?? "Unknown Error";
+                ShowError(e.LocalizedMessage ?? "Unknown Error");
             }
             catch (UnauthorizedAccessException e)
             {
-                errorMessage = e.LocalizedMessage ?? "Unknown Error";
+                ShowError(e.LocalizedMessage ?? "Unknown Error");
             }
             catch (ModelSessionCreateFailException e)
             {
-                errorMessage = e.LocalizedMessage ?? "Unknown Error";
+                ShowError(e.LocalizedMessage ?? "Unknown Error");
             }
             catch (ModelLoadFailException e)
             {
-                errorMessage = e.LocalizedMessage ?? "Unknown Error";
+                ShowError(e.LocalizedMessage ?? "Unknown Error");
                 // Remove invalid model file
-                GetLifecycleScope(this).Launch(Dispatchers.IO, () =>
+                GetLifecycleScope(this).Launch(Dispatchers.Main, () =>
                 {
                     DeleteDownloadedFile(context);
                 });
@@ -165,25 +160,37 @@ public class LoadingFragment : Fragment,
             catch (Exception e)
             {
                 var error = e.LocalizedMessage ?? "Unknown Error";
-                errorMessage =
-                    error + " please manually copy the model to " + InferenceModel.Model.Path;
+                ShowError(error + 
+                    " please manually copy the model to " + InferenceModel.Model.Path);
             }
-            finally
-            {
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    WithContext(Dispatchers.Main, () =>
-                    {
-                        ShowError(errorMessage);
-                    });
-                }
-            }
+        });
+    }
+
+    private void ShowDownloading()
+    {
+        WithContext(Dispatchers.Main, () =>
+        {
+            loadingStatus.Text = "Downloading Model: 0%";
+            progressIndicator.Indeterminate = false;
+            cancelButton.Visibility = ViewStates.Visible;
+        });
+    }
+
+    private void ShowError(string message)
+    {
+        WithContext(Dispatchers.Main, () =>
+        {
+            loadingStatus.Text = message;
+            progressIndicator.Visibility = ViewStates.Gone;
+            cancelButton.Visibility = ViewStates.Gone;
+            backButton.Visibility = ViewStates.Visible;
         });
     }
 
     private void DownloadModel(
         Context context,
         Model model,
+        OkHttpClient client,
         Action<int> onProgressUpdate)
     {
         var requestBuilder = new Request.Builder().Url(model.Url);
@@ -206,6 +213,7 @@ public class LoadingFragment : Fragment,
             }
         }
 
+        var outputFile = new File(InferenceModel.ModelPathFromUrl(context));
         var response = client.NewCall(requestBuilder.Build()).Execute();
         if (!response.IsSuccessful)
         {
@@ -221,32 +229,30 @@ public class LoadingFragment : Fragment,
             }
             throw new Exception("Download failed: " + response.Code());
         }
-        var inputStream = response.Body().ByteStream();
 
-        var outputFile = new File(InferenceModel.ModelPathFromUrl(context));
-        var outputStream = new FileOutputStream(outputFile);
-
-        var buffer = new byte[4096];
-        int bytesRead;
-        long totalBytesRead = 0;
-        long contentLength = response.Body()?.ContentLength() ?? -1;
-
-        while ((bytesRead = inputStream.Read(buffer)) != -1)
-        {
-            if (downloadJob.IsCancelled)
+        using (var inputStream = response.Body().ByteStream())
+        {           
+            using (var outputStream = new FileOutputStream(outputFile))
             {
-                inputStream.Close();
-                outputStream.Close();
-                outputFile.Delete();
-                return;
+                var buffer = new byte[4096];
+                int bytesRead;
+                long totalBytesRead = 0;
+                long contentLength = response.Body()?.ContentLength() ?? -1;
+
+                while ((bytesRead = inputStream.Read(buffer)) > 0)
+                {
+                    YieldKt.Yield(new Continuation()); // Check for cancellation
+                    if (job.IsCancelled)
+                        break;
+                    outputStream.Write(buffer, 0, bytesRead);
+                    totalBytesRead += bytesRead;
+                    var progress = (contentLength > 0) ?
+                        (int) (totalBytesRead * 100 / contentLength) : -1;
+                    onProgressUpdate(progress);
+                }
+                outputStream.Flush();
             }
-            outputStream.Write(buffer, 0, bytesRead);
-            totalBytesRead += bytesRead;
-            var progress = (contentLength > 0) ?
-                (int) (totalBytesRead * 100 / contentLength) : -1;
-            onProgressUpdate(progress);
         }
-        outputStream.Flush();
     }
 
     private void DeleteDownloadedFile(Context context)
@@ -259,14 +265,5 @@ public class LoadingFragment : Fragment,
                 outputFile.Delete();
             }
         });
-    }
-
-    private void ShowError(string message)
-    {
-        loadingStatus.Text = message;
-        loadingStatus.SetTextColor(Resources.GetColor(Resource.Color.error_text, null));
-        progressIndicator.Visibility = ViewStates.Gone;
-        cancelButton.Visibility = ViewStates.Gone;
-        backButton.Visibility = ViewStates.Visible;
     }
 }

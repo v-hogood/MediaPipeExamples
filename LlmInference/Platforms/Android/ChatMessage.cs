@@ -7,7 +7,7 @@ namespace LlmInference;
 //
 public record ChatMessage
 {
-    public string Id => UUID.RandomUUID().ToString();
+    public string Id = UUID.RandomUUID().ToString();
     public string RawMessage = "";
     public string Author = "";
     public bool IsLoading = false;

@@ -10,7 +10,7 @@
     <string name="tokens_remaining">tokens remaining</string>
     <string name="context_full_message">Context full. Refresh session to clear.</string>
     <string name="action_cancel">Cancel</string>
-    <string name="action_back">Back</string>
+    <string name="action_back">Go Back</string>
     <string name="action_refresh">Clear Chat</string>
     <string name="action_close">Close Chat</string>
 </resources>

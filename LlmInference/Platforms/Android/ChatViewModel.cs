@@ -18,11 +18,12 @@ using Runnable = Java.Lang.Runnable;
 namespace LlmInference;
 
 public class ChatViewModel : ViewModel,
+    IFunction1,
     IProgressListener
 {
     private InferenceModel inferenceModel;
 
-    private IMutableStateFlow uiState = MutableStateFlow(new ChatUiState(false, new List<ChatMessage>()));
+    private IMutableStateFlow uiState;
     public IStateFlow UiState;
     
     private IMutableStateFlow tokensRemaining = MutableStateFlow(new Integer(-1));
@@ -34,7 +35,7 @@ public class ChatViewModel : ViewModel,
     public ChatViewModel(InferenceModel model)
     {
         inferenceModel = model;
-        uiState.Value = model.UiState;
+        uiState = MutableStateFlow(inferenceModel.UiState);
 
         UiState = uiState;
         TokensRemaining = tokensRemaining;
@@ -89,9 +90,14 @@ public class ChatViewModel : ViewModel,
         {
             // Reduce current token count (estimate only). sizeInTokens() will be used
             // when computation is done
-            tokensRemaining.Value = Math.Max(0,
-                (tokensRemaining.Value as Integer).IntValue() - 1);
+            StateFlowKt.Update(tokensRemaining, this);
         }
+    }
+
+    public Object Invoke(Object p0)
+    {
+        var it = (p0 as Integer).IntValue();
+        return new Integer(Math.Max(0, it - 1));
     }
 
     void SetInputEnabled(bool enabled)
@@ -101,7 +107,7 @@ public class ChatViewModel : ViewModel,
 
     public void RecomputeSizeInTokens(string message)
     {
-        var remainingTokens = Math.Max(0, inferenceModel.EstimateTokensRemaining(message));
+        var remainingTokens = inferenceModel.EstimateTokensRemaining(message);
         tokensRemaining.Value = new Integer(remainingTokens);
     }
 }

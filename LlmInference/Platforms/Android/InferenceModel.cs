@@ -37,7 +37,7 @@ public class InferenceModel
     private LlmInferenceSession llmInferenceSession;
     private static readonly string Tag = typeof(InferenceModel).Name;
 
-    public ChatUiState UiState => new(Model.Thinking, new List<ChatMessage>());
+    public ChatUiState UiState => new(Model.Thinking);
 
     private InferenceModel(Context context)
     {
@@ -112,7 +112,7 @@ public class InferenceModel
 
     public int EstimateTokensRemaining(string prompt)
     {
-        var messages = UiState.Messages.Select(m => m.RawMessage);
+        var messages = UiState.Messages.Select(it => it.RawMessage);
         var contextString = String.Join(" ", messages) + prompt;
         if (string.IsNullOrEmpty(contextString)) return -1; // Special marker if no content has been added
 
