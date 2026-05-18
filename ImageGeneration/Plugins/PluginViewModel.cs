@@ -6,7 +6,6 @@ using Java.Lang;
 using MediaPipe.Framework.Image;
 using Xamarin.KotlinX.Coroutines;
 using Xamarin.KotlinX.Coroutines.Flow;
-using static MediaPipe.Framework.Image.BitmapImageBuilder;
 using static MediaPipe.Tasks.Vision.ImageGenerator.ImageGenerator.ConditionOptions;
 using static Xamarin.KotlinX.Coroutines.Flow.StateFlowKt;
 using Exception = Java.Lang.Exception;

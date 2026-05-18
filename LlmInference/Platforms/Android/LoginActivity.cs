@@ -1,10 +1,10 @@
 using Android.App;
 using Android.OS;
 using Android.Util;
-using ImageButton = Android.Widget.ImageButton;
 using AndroidX.AppCompat.App;
 using Java.Security;
 using OpenId.AppAuth;
+using ImageButton = Android.Widget.ImageButton;
 using Uri = Android.Net.Uri;
 using View = Android.Views.View;
 

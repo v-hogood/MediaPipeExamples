@@ -12,8 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediaPipeTasksVisionImageGenerator.Android" Version="0.10.26.2" />
-    <PackageReference Include="Xamarin.AndroidX.Compose.Runtime.Annotation" Version="1.10.4.1" />
-    <PackageReference Include="Xamarin.AndroidX.Compose.Runtime.Annotation.Jvm" Version="1.10.4.1" ExcludeAssets="all" />
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.10.0.2" />
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.10.0.2" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.13.0.2" />
