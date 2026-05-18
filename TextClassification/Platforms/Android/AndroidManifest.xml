@@ -17,6 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.google.mediapipe.examples.textclassifier">
 
+    <uses-sdk android:targetSdkVersion="35" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

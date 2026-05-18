@@ -28,6 +28,8 @@
     <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-sdk android:targetSdkVersion="35" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

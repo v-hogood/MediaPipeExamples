@@ -3,6 +3,7 @@
     <style name="Base.Theme.ImageGeneration" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/mp_color_primary</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 
     <style name="Theme.ImageGeneration" parent="Base.Theme.ImageGeneration" />
