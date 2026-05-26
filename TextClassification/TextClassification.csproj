@@ -39,7 +39,7 @@
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.13.0.2" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-ios'">
-    <PackageReference Include="MediaPipeTasksText.iOS" Version="0.10.21" />
+    <PackageReference Include="MediaPipeTasksText.iOS" Version="0.10.33" />
   </ItemGroup>
 
   <Target Name="DownloadFiles" BeforeTargets="CoreCompile">
