@@ -6,7 +6,6 @@ public class ChatUiState : Java.Lang.Object
 {
     public const string UserPrefix = "user";
     public const string ModelPrefix = "model";
-    public const string ThinkingMarkerEnd = "</think>";
 
     private bool supportsThinking = false;
     private List<ChatMessage> messages = new();
@@ -43,9 +42,9 @@ public class ChatUiState : Java.Lang.Object
     {
         var index = messages.FindIndex(it => it.Id.Equals(currentMessageId));
 
-        if (text.Contains(ThinkingMarkerEnd)) // The model is done thinking, we add a new bubble
+        if (text.Contains(Model.ThinkingMarkerEnd)) // The model is done thinking, we add a new bubble
         {
-            var thinkingEnd = text.IndexOf(ThinkingMarkerEnd) + ThinkingMarkerEnd.Length;
+            var thinkingEnd = text.IndexOf(Model.ThinkingMarkerEnd) + Model.ThinkingMarkerEnd.Length;
 
             // Add text to current "thinking" bubble
             var prefix = text.Substring(0, thinkingEnd);
@@ -85,7 +84,7 @@ public class ChatUiState : Java.Lang.Object
     private int AppendToMessage(string id, string suffix)
     {
         var index = messages.FindIndex(it => it.Id.Equals(id));
-        string newText = suffix.Replace(ThinkingMarkerEnd, "");
+        string newText = suffix.Replace(Model.ThinkingMarkerEnd, "");
         messages[index] = messages[index] with
         {
             RawMessage = messages[index].RawMessage + newText,
