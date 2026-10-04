@@ -273,12 +273,6 @@ public class Model
                 return docsUrl.RelativePath;
             }
             var path = NSBundle.MainBundle.PathForResource(PathName, PathExtension);
-            if (string.IsNullOrEmpty(path))
-            {
-                throw new FileNotFoundException($"Model file not found: {Path}");
-                // or: throw new InferenceError.ModelFileNotFound(...);
-            }
-
             return path;
         }
     }
@@ -294,7 +288,7 @@ public class Model
                 url: null,
                 shouldCreate: true,
                 error: out error
-            );
+            ).Append(PathName, false);
 
             return path;
         }

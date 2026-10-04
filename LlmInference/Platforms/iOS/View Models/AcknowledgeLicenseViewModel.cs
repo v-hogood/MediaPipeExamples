@@ -1,3 +1,4 @@
+using CoreFoundation;
 using Foundation;
 
 namespace LlmInference;
@@ -13,7 +14,8 @@ public class AcknowledgeLicenseViewModel
         set
         {
             disableContinue = value;
-            OnDisableContinueChanged?.Invoke(disableContinue);
+            DispatchQueue.MainQueue.DispatchAsync(() =>
+                OnDisableContinueChanged?.Invoke(disableContinue));
         }
     }
 

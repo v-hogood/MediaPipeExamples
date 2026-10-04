@@ -1,6 +1,5 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Channels;
-using Foundation;
 using MediaPipeTasksGenAI;
 
 namespace LlmInference;
@@ -23,6 +22,10 @@ public class OnDeviceModel
         options.MaxTokens = MaxTokens;
 
         Inference = new MPPLLMInference(options: options, error: out var error);
+        if (error != null)
+        {
+            throw new Exception(error.LocalizedDescription);
+        }
     }
 }
 

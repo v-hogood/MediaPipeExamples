@@ -5,51 +5,51 @@ namespace LlmInference;
 
 public class ConversationViewModel
 {
-    private List<MessageViewModel> messageViewModels = new();
+    List<MessageViewModel> messageViewModels = new();
     public List<MessageViewModel> MessageViewModels
     {
         get => messageViewModels;
         private set
         {
             messageViewModels = value;
-            OnMessageViewModelsChanged?.Invoke(messageViewModels.LastOrDefault());
+            RunOnMain(() => OnMessageViewModelsChanged?.Invoke(messageViewModels));
         }
     }
 
-    private ConversationState currentState = new ConversationState.Idle();
+    ConversationState currentState = new ConversationState.Idle();
     public ConversationState CurrentState
     {
         get => currentState;
         private set
         {
             currentState = value;
-            OnCurrentStateChanged?.Invoke(value);
+            RunOnMain(() => OnCurrentStateChanged?.Invoke(currentState));
         }
     }
 
-    private bool downloadRequired = true;
+    bool downloadRequired = true;
     public bool DownloadRequired
     {
         get => downloadRequired;
         private set
         {
             downloadRequired = value;
-            OnDownloadRequiredChanged?.Invoke(value);
+            RunOnMain(() => OnDownloadRequiredChanged?.Invoke(downloadRequired));
         }
     }
 
-    private int remainingSizeInTokens = -1;
+    int remainingSizeInTokens = -1;
     public int RemainingSizeInTokens
     {
         get => remainingSizeInTokens;
         private set
         {
             remainingSizeInTokens = value;
-            OnRemainingSizeInTokensChanged?.Invoke(value);
+            RunOnMain(() => OnRemainingSizeInTokensChanged?.Invoke(remainingSizeInTokens));
         }
     }
 
-    public Action<MessageViewModel> OnMessageViewModelsChanged;
+    public Action<List<MessageViewModel>> OnMessageViewModelsChanged;
     public Action<ConversationState> OnCurrentStateChanged;
     public Action<bool> OnDownloadRequiredChanged;
     public Action<int> OnRemainingSizeInTokensChanged;
@@ -79,15 +79,15 @@ public class ConversationViewModel
     public ConversationViewModel(Model modelCategory)
     {
         this.ModelCategory = modelCategory;
-        downloadRequired = modelCategory.ModelPath == null;
+        DownloadRequired = modelCategory.ModelPath == null;
     }
 
     public void LoadModel()
     {
-        if (currentState is ConversationState.Idle && !downloadRequired)
+        if (currentState is not ConversationState.Idle || downloadRequired)
             return;
 
-        currentState = new ConversationState.LoadingModel();
+        CurrentState = new ConversationState.LoadingModel();
         Task.Run(async () =>
         {
             try
@@ -98,7 +98,7 @@ public class ConversationViewModel
             }
             catch (Exception error)
             {
-                currentState = new ConversationState.CriticalError(new InferenceError.MediaPipeTasksError(error));
+                CurrentState = new ConversationState.CriticalError(new InferenceError.MediaPipeTasksError(error));
             }
         });
     }
@@ -107,13 +107,13 @@ public class ConversationViewModel
     {
         chat = null;
         model = null;
-        currentState = new ConversationState.LoadingModel();
+        CurrentState = new ConversationState.LoadingModel();
     }
 
     public void HandleModelDownloadedCompleted()
     {
         DownloadRequired = false;
-        currentState = new ConversationState.Idle();
+        CurrentState = new ConversationState.Idle();
         LoadModel();
     }
 
@@ -136,6 +136,7 @@ public class ConversationViewModel
         {
             chat = new Chat(model: model);
             messageViewModels.Clear();
+            MessageViewModels = messageViewModels;
             CurrentState = new ConversationState.Done();
             RemainingSizeInTokens = -1;
         }
@@ -170,7 +171,7 @@ public class ConversationViewModel
     public void RecomputeSizeInTokens(string prompt)
     {
         var history = string.Concat(messageViewModels.Select(vm => vm.ChatMessage.Text));
-        remainingSizeInTokens =
+        RemainingSizeInTokens =
             chat?.EstimateTokensRemaining(prompt: prompt, history: history, historyCount: messageViewModels.Count)
             ?? remainingSizeInTokens;
     }
@@ -199,6 +200,7 @@ public class ConversationViewModel
 
         messageViewModels.Add(userViewModel);
         messageViewModels.Add(systemViewModel);
+        MessageViewModels = messageViewModels;
 
         try
         {
@@ -214,7 +216,6 @@ public class ConversationViewModel
 
     private async Task UpdateSystemViewModel(MessageViewModel messageVm, IAsyncEnumerable<string> responseStream)
     {
-        CurrentState = new ConversationState.Done();
         CurrentState = new ConversationState.StreamingResponse();
 
         var currentMessageVm = messageVm;
@@ -223,15 +224,20 @@ public class ConversationViewModel
         {
             await foreach (var partialResult in responseStream)
             {
-                await MainThread.InvokeOnMainThreadAsync(() =>
+                RunOnMain(() =>
                 {
                     currentMessageVm = AppendPartialResult(partialResult, currentMessageVm);
+                    DecrementRemainingSizeInTokens();
                 });
             }
         }
         catch (Exception error)
         {
             HandleStreamError(error, messageVm);
+        }
+        finally
+        {
+            CurrentState = new ConversationState.Done();
         }
     }
 
@@ -259,6 +265,7 @@ public class ConversationViewModel
 
                 newMessageVm = nextMessageVm;
                 messageViewModels.Add(nextMessageVm);
+                MessageViewModels = messageViewModels;
             }
         }
         else
@@ -274,6 +281,11 @@ public class ConversationViewModel
         return ModelCategory.Thinking && !string.IsNullOrEmpty(Model.ThinkingMarkerEnd)
             ? text.Replace(Model.ThinkingMarkerEnd, string.Empty)
             : text;
+    }
+
+    private void DecrementRemainingSizeInTokens()
+    {
+        RemainingSizeInTokens = Math.Max(0, RemainingSizeInTokens - 1);
     }
 
     private void HandleStreamError(Exception error, MessageViewModel messageVm)
@@ -305,13 +317,13 @@ public class ConversationViewModel
 
     private void RunOnMain(Action action)
     {
-        if (MainThread.IsMainThread)
+        if (NSThread.Current.IsMainThread)
         {
             action();
         }
         else
         {
-            DispatchQueue.MainQueue.DispatchAsync(action);
+            DispatchQueue.MainQueue.DispatchAsync(action: action);
         }
     }
 

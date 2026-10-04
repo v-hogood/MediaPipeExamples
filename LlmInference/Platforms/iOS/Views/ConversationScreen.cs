@@ -43,7 +43,11 @@ public class ConversationViewController : UIViewController, IUITableViewDataSour
         SetupLoadingOverlay();
 
         BindViewModel();
+    }
 
+    public override void ViewWillAppear(bool animated)
+    {
+        base.ViewWillAppear(animated);
         viewModel.LoadModel();
     }
 
@@ -163,13 +167,11 @@ public class ConversationViewController : UIViewController, IUITableViewDataSour
         loadingLabel.TextAlignment = UITextAlignment.Center;
         loadingLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-        var container = new UIStackView(views: new UIView[] { activityIndicator, loadingLabel })
-        {
-            Axis = UILayoutConstraintAxis.Vertical,
-            Spacing = 16,
-            Alignment = UIStackViewAlignment.Center,
-            TranslatesAutoresizingMaskIntoConstraints = false
-        };
+        var container = new UIStackView(views: new UIView[] { activityIndicator, loadingLabel });
+        container.Axis = UILayoutConstraintAxis.Vertical;
+        container.Spacing = 16;
+        container.Alignment = UIStackViewAlignment.Center;
+        container.TranslatesAutoresizingMaskIntoConstraints = false;
 
         loadingOverlay.AddSubview(container);
         View.AddSubview(loadingOverlay);
@@ -298,7 +300,7 @@ public class ConversationViewController : UIViewController, IUITableViewDataSour
         var count = viewModel.MessageViewModels.Count;
         if (count <= 0) return;
         var lastIndexPath = NSIndexPath.FromRowSection(row: count - 1, section:0);
-        tableView.ScrollToRow(lastIndexPath, UITableViewScrollPosition.Bottom, true);
+        tableView.ScrollToRow(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true);
     }
 
     // MARK: - UITableViewDataSource
@@ -317,8 +319,8 @@ public class ConversationViewController : UIViewController, IUITableViewDataSour
                 tableView.BeginUpdates();
                 tableView.EndUpdates();
             });
+            ScrollToBottom();
         });
-        ScrollToBottom();
 
         return cell;
     }

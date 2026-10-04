@@ -1,3 +1,5 @@
+using CoreFoundation;
+
 namespace LlmInference;
 
 public interface IIdentifiable<T>
@@ -16,15 +18,8 @@ public class MessageViewModel : IIdentifiable<Guid>
         set
         {
             chatMessage = value;
-            var message = chatMessage;
-            if (MainThread.IsMainThread)
-            {
-                OnMessageChanged?.Invoke(message);
-            }
-            else
-            {
-                MainThread.BeginInvokeOnMainThread(() => OnMessageChanged?.Invoke(message));
-            }
+            DispatchQueue.MainQueue.DispatchAsync(() =>
+                OnMessageChanged?.Invoke(chatMessage));
         }
     }
     
@@ -47,6 +42,7 @@ public class MessageViewModel : IIdentifiable<Guid>
             return;
 
         chatMessage.Participant = participant;
+        ChatMessage = chatMessage;
     }
 
     public void Update(string text, ChatMessage.ParticipantEnum participant)
@@ -62,6 +58,7 @@ public class MessageViewModel : IIdentifiable<Guid>
         else
             // Trim any leading characters in whole message.
             chatMessage.Text = (chatMessage.Text + text).TrimStart();
+        ChatMessage = chatMessage;
     }
 }
 

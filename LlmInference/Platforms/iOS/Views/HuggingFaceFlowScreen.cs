@@ -57,7 +57,7 @@ public class HuggingFaceFlowViewController : UIViewController
             newViewController = new DownloadViewController(downloadViewModel, () =>
             {
                 viewModel.UpdateState();
-                DismissViewController(animated: true, completionHandler:null);
+                DismissViewController(animated: true, completionHandler: null);
             });
         }
 

@@ -1,4 +1,5 @@
 using AuthenticationServices;
+using CoreFoundation;
 using Foundation;
 
 namespace LlmInference;
@@ -12,7 +13,8 @@ public class DownloadViewModel
         set
         {
             state = value;
-            OnStateChanged?.Invoke(value);
+            DispatchQueue.MainQueue.DispatchAsync(() =>
+                OnStateChanged?.Invoke(state));
         }
     }
 
@@ -23,7 +25,17 @@ public class DownloadViewModel
         set
         {
             progress = value;
-            OnProgressChanged?.Invoke(value);
+            if (NSThread.Current.IsMainThread)
+            {
+                OnProgressChanged?.Invoke(value);
+            }
+            else
+            {
+                DispatchQueue.MainQueue.DispatchAsync(() =>
+                {
+                    OnProgressChanged?.Invoke(value);
+                });
+            }
         }
     }
 
@@ -67,7 +79,7 @@ public class DownloadViewModel
             }
             catch (NetworkService.NetworkException networkException)
             {
-                this.state = new DownloadState.Error(DownloadError.From(networkException));
+                this.State = new DownloadState.Error(DownloadError.From(networkException));
                 HandleNetworkError(networkException.Error);
             }
             catch (OperationCanceledException)
@@ -76,7 +88,7 @@ public class DownloadViewModel
             }
             catch (Exception ex)
             {
-                this.state = new DownloadState.Error(DownloadError.Generic(ex));
+                this.State = new DownloadState.Error(DownloadError.Generic(ex));
             }
             finally
             {
@@ -117,11 +129,11 @@ public class DownloadViewModel
         }
         catch (OAuthService.OAuthException exception)
         {
-            state = new DownloadState.Error(DownloadError.From(oauthError: exception));
+            State = new DownloadState.Error(DownloadError.From(oauthError: exception));
         }
         catch (Exception exception)
         {
-            state = new DownloadState.Error(DownloadError.Generic(error: exception));
+            State = new DownloadState.Error(DownloadError.Generic(error: exception));
         }
 
         return null;
@@ -135,11 +147,11 @@ public class DownloadViewModel
         }
         catch (OAuthService.OAuthException exception)
         {
-            state = new DownloadState.Error(DownloadError.From(oauthError: exception));
+            State = new DownloadState.Error(DownloadError.From(oauthError: exception));
         }
         catch (Exception exception)
         {
-            state = new DownloadState.Error(DownloadError.Generic(error: exception));
+            State = new DownloadState.Error(DownloadError.Generic(error: exception));
         }
 
         return false;
@@ -176,15 +188,15 @@ public class DownloadViewModel
                 UpdateStatesOnCancellation();
                 return;
             }
-            state = new DownloadState.Progress();
+            State = new DownloadState.Progress();
             if (downloadEvent is NetworkService.DownloadEvent.Progress)
             {
-                progress = (downloadEvent as NetworkService.DownloadEvent.Progress).progress;
+                Progress = (downloadEvent as NetworkService.DownloadEvent.Progress).progress;
             }
             else if (downloadEvent is NetworkService.DownloadEvent.Completed)
             {
-                progress = 100.0;
-                state = new DownloadState.Completed();
+                Progress = 100.0;
+                State = new DownloadState.Completed();
             } 
         }
     }
@@ -204,8 +216,8 @@ public class DownloadViewModel
 
     private void UpdateStatesOnCancellation()
     {
-        this.state = new DownloadState.NotInitiated();
-        this.progress = 0.0;
+        this.State = new DownloadState.NotInitiated();
+        this.Progress = 0.0;
     }
 
     // MARK: - Download State and Errors

@@ -1,3 +1,5 @@
+using CoreFoundation;
+
 namespace LlmInference;
 
 public class HuggingFaceFlowViewModel
@@ -15,7 +17,8 @@ public class HuggingFaceFlowViewModel
         set
         {
             action = value;
-            OnActionChanged?.Invoke(action);
+            DispatchQueue.MainQueue.DispatchAsync(() =>
+                OnActionChanged?.Invoke(action));
         }
     }
   

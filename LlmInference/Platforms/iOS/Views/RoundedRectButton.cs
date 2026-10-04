@@ -6,7 +6,6 @@ namespace LlmInference;
 public class RoundedRectButton : UIButton
 {
     public RoundedRectButton(string title, UIColor backgroundColor = null, UIColor foregroundColor = null, UIImage logo = null)
-        : base(UIButtonType.System)
     {
         backgroundColor = backgroundColor ?? Metadata.GlobalColor;
         foregroundColor = foregroundColor ?? UIColor.White;
@@ -40,7 +39,7 @@ public class RoundedRectButton : UIButton
 public sealed class HuggingFaceButton : RoundedRectButton
 {
     public HuggingFaceButton(string title)
-        : base(title, UIColor.Black, UIColor.White, UIImage.FromBundle("HfLogo")) { }
+        : base(title: title, backgroundColor: UIColor.Black, foregroundColor: UIColor.White, logo: UIImage.FromBundle("HfLogo")) { }
 
     public HuggingFaceButton(IntPtr handle) : base(handle) { }
 }
