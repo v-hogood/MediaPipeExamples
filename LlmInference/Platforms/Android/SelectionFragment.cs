@@ -26,7 +26,8 @@ public class SelectionFragment : Fragment,
         base.OnViewCreated(view, savedInstanceState);
         var container = view.FindViewById<LinearLayout>(Resource.Id.model_list_container);
 
-        var fields = typeof(Model).GetFields(BindingFlags.Static | BindingFlags.Public);
+        var fields = typeof(Model).GetFields(BindingFlags.Static | BindingFlags.Public).
+            Where(field => field.FieldType == typeof(Model));
         foreach (var field in fields)
         {
             var itenView = LayoutInflater.FromContext(RequireContext()).

@@ -36,15 +36,15 @@
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="MediaPipeTasksGenAI.Android" Version="0.10.33" />
-    <PackageReference Include="Square.OkHttp3" Version="5.3.2.2" />
+    <PackageReference Include="MediaPipeTasksGenAI.Android" Version="0.10.35" />
+    <PackageReference Include="Square.OkHttp3" Version="5.5.0" />
     <PackageReference Include="TMijieux.Xamarin.OpenId.AppAuth.Android" Version="0.11.1-alpha.1" />
-    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.10.0" />
-    <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.38" />
-    <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.6.0" />
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel.Ktx" Version="2.10.0.2" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.10.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.CardView" Version="1.0.0.39" />
+    <PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.6.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel.Ktx" Version="2.11.0.1" />
     <PackageReference Include="Xamarin.AndroidX.Security.SecurityCrypto" Version="1.1.0.4-alpha07" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.13.0.2" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.14.0.6" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
     <PackageReference Include="MediaPipeTasksGenAI.iOS" Version="0.10.33" />
