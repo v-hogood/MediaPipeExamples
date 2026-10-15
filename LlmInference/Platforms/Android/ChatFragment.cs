@@ -137,7 +137,7 @@ public class ChatFragment : Fragment,
         else if (p0 is Integer)
         {
             var tokens = (p0 as Integer).IntValue();
-            Log.Debug(Tag, "tokens = " + tokens);
+            // Log.Debug(Tag, "tokens = " + tokens);
             GetLifecycleScope(ViewLifecycleOwner).Launch(Dispatchers.Main, () =>
             {
                 tokensRemaining.Text = tokens >= 0 ? tokens + " " + GetString(Resource.String.tokens_remaining) : "";

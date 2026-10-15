@@ -32,7 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="MediaPipeTasksVision.Android" Version="0.10.35" />
+    <PackageReference Include="MediaPipeTasksVision.Android" Version="1.0.0" />
     <PackageReference Include="Xamarin.AndroidX.Camera.Camera2" Version="1.6.2" />
     <PackageReference Include="Xamarin.AndroidX.Camera.View" Version="1.6.2" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.10.1" />

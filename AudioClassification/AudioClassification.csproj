@@ -11,7 +11,7 @@
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MediaPipeTasksAudio.Android" Version="0.10.35" />
+    <PackageReference Include="MediaPipeTasksAudio.Android" Version="1.0.0" />
     <PackageReference Include="Xamarin.AndroidX.Collection.Jvm" Version="1.6.0.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.10.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.10.1" />

@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="MediaPipeTasksGenAI.Android" Version="0.10.35" />
+    <PackageReference Include="MediaPipeTasksGenAI.Android" Version="0.10.35.1" />
     <PackageReference Include="Square.OkHttp3" Version="5.5.0" />
     <PackageReference Include="TMijieux.Xamarin.OpenId.AppAuth.Android" Version="0.11.1-alpha.1" />
     <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.10.0.1" />
