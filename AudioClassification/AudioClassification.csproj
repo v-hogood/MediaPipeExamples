@@ -1,23 +1,49 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0-android</TargetFramework>
-    <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
+    <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
     <OutputType>Exe</OutputType>
-    <Nullable>disable</Nullable>
+    <RootNamespace>AudioClassification</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationId>com.google.mediapipe.examples.AudioClassifier</ApplicationId>
-    <ApplicationVersion>1</ApplicationVersion>
+    <Nullable>disable</Nullable>
+    <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences> 
+
+    <!-- Display name -->
+    <ApplicationTitle>AudioClassification</ApplicationTitle>
+
+    <!-- App Identifier -->
+    <ApplicationId>com.google.mediapipe.examples.AudioClassification</ApplicationId>
+
+    <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
+
+    <RuntimeIdentifier Condition="'$(TargetFramework)' == 'net10.0-ios'">ios-arm64</RuntimeIdentifier>
+
     <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
-  <ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
     <PackageReference Include="MediaPipeTasksAudio.Android" Version="1.0.0" />
     <PackageReference Include="Xamarin.AndroidX.Collection.Jvm" Version="1.6.0.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.10.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.10.1" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.14.0.6" />
   </ItemGroup>
-  <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite" DestinationFolder="Assets" />
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <PackageReference Include="MediaPipeTasksAudio.iOS" Version="1.0.0" />
+  </ItemGroup>
+
+  <Target Name="DownloadFiles" BeforeTargets="CoreCompile">
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite" DestinationFolder="Platforms/Android/Assets" />
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite" DestinationFolder="Platforms/iOS/Resources" />
   </Target>
 </Project>

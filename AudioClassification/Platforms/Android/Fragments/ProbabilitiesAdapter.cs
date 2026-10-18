@@ -1,8 +1,11 @@
 ﻿using Android.Content.Res;
-using Android.Graphics;
 using Android.Views;
+using Android.Widget;
 using AndroidX.RecyclerView.Widget;
 using MediaPipe.Tasks.Components.Containers;
+using Color = Android.Graphics.Color;
+using ProgressBar = Android.Widget.ProgressBar;
+using View = Android.Views.View;
 
 namespace AudioClassification;
 

@@ -1,6 +1,8 @@
 using Android.Media;
+using Android.OS;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 using AndroidX.Activity.Result;
 using AndroidX.Activity.Result.Contract;
 using AndroidX.AppCompat.Widget;
@@ -15,8 +17,10 @@ using MediaPipe.Tasks.Audio.Core;
 using MediaPipe.Tasks.Components.Containers;
 using Fragment = AndroidX.Fragment.App.Fragment;
 using Object = Java.Lang.Object;
+using ProgressBar = Android.Widget.ProgressBar;
 using Thread = Java.Lang.Thread;
 using Uri = Android.Net.Uri;
+using View = Android.Views.View;
 
 namespace AudioClassification;
 

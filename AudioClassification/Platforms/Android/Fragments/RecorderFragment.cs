@@ -1,4 +1,6 @@
-﻿using Android.Views;
+﻿using Android.OS;
+using Android.Views;
+using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Core.Content;
 using AndroidX.Navigation;
@@ -8,6 +10,7 @@ using Java.Util.Concurrent;
 using MediaPipe.Tasks.Audio.Core;
 using MediaPipe.Tasks.Components.Containers;
 using Fragment = AndroidX.Fragment.App.Fragment;
+using View = Android.Views.View;
 
 namespace AudioClassification;
 
