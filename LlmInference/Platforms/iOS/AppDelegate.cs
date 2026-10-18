@@ -20,19 +20,6 @@ public class AppDelegate : UIResponder, IUIApplicationDelegate
         // First launch cleanup
         CleanupFirstLaunchIfNeeded();
 
-        // Fallback for non-Scene-based launches
-        if (OperatingSystem.IsIOSVersionAtLeast(13, 0))
-        {
-            // Handled by SceneDelegate
-        }
-        else
-        {
-            var window = new UIWindow(frame: UIScreen.MainScreen.Bounds);
-            window.RootViewController = AppDelegate.MakeRootViewController();
-            Window = window;
-            window.MakeKeyAndVisible();
-        }
-
         return true;
     }
 

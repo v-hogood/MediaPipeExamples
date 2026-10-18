@@ -4,7 +4,8 @@ using UIKit;
 
 namespace LlmInference;
 
-public class ConversationViewController : UIViewController, IUITableViewDataSource, IUITableViewDelegate, IUITextFieldDelegate
+public class ConversationViewController : UIViewController, IUITableViewDataSource, IUITableViewDelegate, IUITextFieldDelegate,
+     IUISheetPresentationControllerDelegate
 {
     private UIColor alertBackgroundColor = UIColor.Black.ColorWithAlpha(0.3f);
     private const string newChatSystemSymbolName = "arrow.clockwise";
@@ -252,11 +253,16 @@ public class ConversationViewController : UIViewController, IUITableViewDataSour
         var sheet = flowVC.PresentationController as UISheetPresentationController;
         if (sheet != null)
         {
+            sheet.Delegate = this;
             sheet.Detents = [UISheetPresentationControllerDetent.CreateMediumDetent(), UISheetPresentationControllerDetent.CreateLargeDetent()];
             sheet.PrefersGrabberVisible = true;
         }
-        PresentViewController(flowVC, true, () =>
-            viewModel.HandleModelDownloadedCompleted());
+        PresentViewController(flowVC, true, null);
+    }
+
+    public void DidDismiss(UIPresentationController presentationController)
+    {
+        viewModel.HandleModelDownloadedCompleted();
     }
 
     private void ShowErrorAlert(ConversationViewModel.InferenceError error)
