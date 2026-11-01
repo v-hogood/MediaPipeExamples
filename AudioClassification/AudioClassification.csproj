@@ -32,14 +32,14 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="MediaPipeTasksAudio.Android" Version="1.0.0" />
+    <PackageReference Include="MediaPipeTasksAudio.Android" Version="1.2.0" />
     <PackageReference Include="Xamarin.AndroidX.Collection.Jvm" Version="1.6.0.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.10.1" />
     <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.10.1" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.14.0.6" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-    <PackageReference Include="MediaPipeTasksAudio.iOS" Version="1.0.0" />
+    <PackageReference Include="MediaPipeTasksAudio.iOS" Version="1.2.0" />
   </ItemGroup>
 
   <Target Name="DownloadFiles" BeforeTargets="CoreCompile">
