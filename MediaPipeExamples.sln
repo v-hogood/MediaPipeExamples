@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlmInference", "LlmInferenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecisionMaker", "DecisionMaker\DecisionMaker.csproj", "{286E8353-FC42-4F2F-8B48-C9E17D4003E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticRetriever", "SemanticRetriever\SemanticRetriever.csproj", "{3AB58917-CB84-49B2-B4BE-8BA1B429628D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{286E8353-FC42-4F2F-8B48-C9E17D4003E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{286E8353-FC42-4F2F-8B48-C9E17D4003E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{286E8353-FC42-4F2F-8B48-C9E17D4003E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB58917-CB84-49B2-B4BE-8BA1B429628D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB58917-CB84-49B2-B4BE-8BA1B429628D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB58917-CB84-49B2-B4BE-8BA1B429628D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB58917-CB84-49B2-B4BE-8BA1B429628D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
