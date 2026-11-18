@@ -3,7 +3,7 @@
 ### Overview
 
 This app demonstrates on-device **semantic image search** with the MediaPipe
-`tasks-retrieval` library. Ten sample images are embedded with
+`TasksRetrieval` library. Ten sample images are embedded with
 [EmbeddingGemma V2](https://ai.google.dev/gemma) running entirely on the device, stored in a
 vector store, and then retrieved by meaning — searching for *"a piece of fruit"* returns the
 banana and the apple even though neither the query nor the images contain that text.
@@ -21,11 +21,11 @@ shared by both.
 
 This application should be run on a physical Android device (arm64).
 
-## Build the demo using Android Studio
+## Build the demo using Visual Studio
 
 ### Prerequisites
 
-*   The **[Android Studio](https://developer.android.com/studio/index.html)** IDE.
+*   The **[Visual Studio](https://code.visualstudio.com)** IDE.
 
 *   A physical Android device with a minimum OS version of SDK 24 (Android 7.0 - Nougat) with
     developer mode enabled.
@@ -35,10 +35,10 @@ This application should be run on a physical Android device (arm64).
 The app uses the [EmbeddingGemma 2 (Text + Vision 440M) LiteRT-LM model][model-url] at:
 
 ```
-app/src/main/assets/embeddinggemma-2-text-vision-440m.litertlm
+Platforms/Android/Assets/embeddinggemma-2-text-vision-440m.litertlm
 ```
 
-`app/download.gradle` automatically downloads the model from
+`SemanticRetriever.csproj` automatically downloads the model from
 <https://huggingface.co/litert-community/embeddinggemma-2-text-vision-440m-litert-lm/resolve/main/embeddinggemma-2-text-vision-440m.litertlm>
 at build time. If the model is not yet live at that URL or requires authentication, download it
 manually and place it at the path above.
@@ -58,13 +58,13 @@ load time on the first start.
 
 ### Building
 
-*   Open Android Studio. From the Welcome screen, select Open an existing Android Studio project.
+*   Open Visual Studio. From the Welcome screen, select Open an existing Visual Studio project.
 
-*   Navigate to and select the `mediapipe/examples/semantic_retriever/android` directory. Click OK.
+*   Navigate to and select the `MediaPipeExamples/SemanticRetriever` directory. Click OK.
 
-*   If it asks you to do a Gradle Sync, click OK.
+*   If it asks you to do an Android sync, click OK.
 
-*   With your Android device connected and developer mode enabled, click the green Run arrow.
+*   With your Android device connected and developer mode enabled, click the Run arrow.
 
 ### Using the app
 

@@ -21,8 +21,6 @@
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">17.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
-
-    <AndroidStoreUncompressedFileExtensions>litertlm</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -33,9 +31,15 @@
     <PackageReference Include="MediaPipeTasksRetrieval.Android" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+    <PackageReference Include="MediaPipeTasksRetrieval.iOS" Version="1.2.0" />
   </ItemGroup>
 
-  <Target Name="DownloadFiles" BeforeTargets="CoreCompile">
-    <DownloadFile SourceUrl="https://huggingface.co/litert-community/embeddinggemma-2-text-vision-440m-litert-lm/resolve/main/embeddinggemma-2-text-vision-440m.litertlm" DestinationFolder="Platforms/Android/Assets" />
+  <ItemGroup>
+    <MauiAsset Include="Resources\Images\*.jpg" LogicalName="%(Filename).jpg" />
+    <MauiAsset Include="Resources\Raw\*.litertlm" LogicalName="%(Filename).litertlm" />
+  </ItemGroup>
+
+  <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
+    <DownloadFile SourceUrl="https://huggingface.co/litert-community/embeddinggemma-2-text-vision-440m-litert-lm/resolve/main/embeddinggemma-2-text-vision-440m.litertlm" DestinationFolder="Resources/Raw" />
   </Target>
 </Project>

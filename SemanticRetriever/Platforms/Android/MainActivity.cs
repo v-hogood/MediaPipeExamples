@@ -301,7 +301,7 @@ public class MainActivity : AppCompatActivity,
                     progressIndex.SetProgressCompat(index * 100 / sampleImages.Count, true);
                     await RunRetrieverAsync(() =>
                     {
-                        var assetUri = Uri.Parse($"file:///android_asset/images/{imageName}");
+                        var assetUri = Uri.Parse($"file:///android_asset/{imageName}");
                         retriever.EmbedImage(id, assetUri);
                     });
                     Log.Debug("MainActivity", $"Embedded {id}");
@@ -425,7 +425,7 @@ class ResultsAdapter : RecyclerView.Adapter
         // Scores are cosine similarities in [-1, 1]; map to a 0-100 bar.
         holder.pbScore.SetProgressCompat(System.Math.Clamp((int)((score + 1f) / 2f * 100), 0, 100), true);
 
-        holder.ivResult.SetImageBitmap(LoadAsset(holder.ItemView.Context, $"images/{id}.jpg"));
+        holder.ivResult.SetImageBitmap(LoadAsset(holder.ItemView.Context, $"{id}.jpg"));
     }
 
     private Bitmap LoadAsset(Context context, string path)
