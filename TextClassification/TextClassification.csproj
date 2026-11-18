@@ -21,8 +21,6 @@
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
-
-    <AndroidStoreUncompressedFileExtensions>tflite</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -31,19 +29,17 @@
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
     <PackageReference Include="MediaPipeTasksText.Android" Version="1.2.0" />
-    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" />  
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.11.0.1" />  
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.11.0.1" />  
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.14.0.6" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
     <PackageReference Include="MediaPipeTasksText.iOS" Version="1.2.0" />
   </ItemGroup>
 
-  <Target Name="DownloadFiles" BeforeTargets="CoreCompile">
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/bert_classifier/float32/1/bert_classifier.tflite" DestinationFolder="Platforms/Android/Assets" DestinationFileName="mobilebert.tflite" />
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/average_word_classifier/float32/1/average_word_classifier.tflite" DestinationFolder="Platforms/Android/Assets" DestinationFileName="wordvec.tflite" />
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/bert_classifier/float32/1/bert_classifier.tflite" DestinationFolder="Platforms/iOS/Resources" DestinationFileName="mobilebert.tflite" />
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/average_word_classifier/float32/1/average_word_classifier.tflite" DestinationFolder="Platforms/iOS/Resources" DestinationFileName="wordvec.tflite" />
+  <ItemGroup>
+    <MauiAsset Include="Resources\Raw\*.tflite" LogicalName="%(Filename).tflite" />
+  </ItemGroup>
+
+  <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/bert_classifier/float32/1/bert_classifier.tflite" DestinationFolder="Resources/Raw" DestinationFileName="mobilebert.tflite" />
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/text_classifier/average_word_classifier/float32/1/average_word_classifier.tflite" DestinationFolder="Resources/Raw" DestinationFileName="wordvec.tflite" />
   </Target>
 </Project>

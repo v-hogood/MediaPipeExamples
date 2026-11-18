@@ -21,8 +21,6 @@
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">17.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
-
-    <AndroidStoreUncompressedFileExtensions>task;litertlm</AndroidStoreUncompressedFileExtensions>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -31,18 +29,20 @@
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
     <PackageReference Include="MediaPipeTasksDecision.Android" Version="1.2.0" />
-    <PackageReference Include="Xamarin.AndroidX.Collection.Jvm" Version="1.6.0.1" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.Fragment" Version="2.10.1" />
-    <PackageReference Include="Xamarin.AndroidX.Navigation.UI" Version="2.10.1" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.14.0.6" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
     <PackageReference Include="MediaPipeTasksDecision.iOS" Version="1.2.0" />
   </ItemGroup>
 
-  <Target Name="DownloadFiles" BeforeTargets="CoreCompile">
-    <DownloadFile SourceUrl="https://huggingface.co/litert-community/embeddinggemma-2-text-270m-litert-lm/resolve/main/embeddinggemma-2-text-270m.litertlm" DestinationFolder="Platforms/Android/Assets" />
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/decision_maker/laya/float32/laya_s256/latest/laya_s256.task" DestinationFolder="Platforms/Android/Assets" />
-    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/decision_maker/gliner/float16/gliner_s256/latest/gliner_s256.task" DestinationFolder="Platforms/Android/Assets" />
+  <ItemGroup>
+    <MauiAsset Include="Resources\Raw\*.litertlm" LogicalName="%(Filename).litertlm" />
+    <MauiAsset Include="Resources\Raw\*.task" LogicalName="%(Filename).task" />
+  </ItemGroup>
+
+  <Target Name="DownloadFiles" BeforeTargets="BeforeBuild">
+    <DownloadFile SourceUrl="https://huggingface.co/litert-community/embeddinggemma-2-text-270m-litert-lm/resolve/main/embeddinggemma-2-text-270m.litertlm" DestinationFolder="Resources/Raw" />
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/decision_maker/laya/float32/laya_s256/latest/laya_s256.task" DestinationFolder="Resources/Raw" />
+    <DownloadFile SourceUrl="https://storage.googleapis.com/mediapipe-models/decision_maker/gliner/float16/gliner_s256/latest/gliner_s256.task" DestinationFolder="Resources/Raw" />
   </Target>
 </Project>
